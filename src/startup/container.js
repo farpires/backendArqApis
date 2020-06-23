@@ -1,10 +1,8 @@
 const {createContainer, asClass, asValue, asFunction} = require("awilix"); 
-
 //vamos a solicitad nuestro config, es para que las varibales de entorno deigual forma sean inyectada , donde las necesitemos , por inyeccion de dependencia 
 //config
 const config = require('../config');
 const app = require('.')
-
 
 //services
 const {HomeService} = require("../services");
@@ -17,7 +15,10 @@ const {HomeRoutes} = require('../routes/index.routes');
 const Routes = require('../routes')
 
 //model
-const {User,Comment,Idea}= require("../models")
+const {User,Comment,Idea}= require("../models");
+
+//repository
+const {IdeaRepository,CommentRepository,UserRepository} = require("../repositories");
 
 const container = createContainer();
 
@@ -55,6 +56,11 @@ container
         User: asValue(User),
         Idea: asValue(Idea),
         Comment: asValue(Comment)
+    })
+    .register({
+        UserRepository: asClass(UserRepository).singleton(),
+        IdeaRepository: asClass(IdeaRepository).singleton(),
+        CommentRepository: asClass(CommentRepository).singleton(),
     })
 
 module.exports = container;
