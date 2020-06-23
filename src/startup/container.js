@@ -16,7 +16,8 @@ const {HomeController} = require("../controllers");
 const {HomeRoutes} = require('../routes/index.routes'); 
 const Routes = require('../routes')
 
-
+//model
+const {User,Comment,Idea}= require("../models")
 
 const container = createContainer();
 
@@ -47,6 +48,13 @@ container
     /*A QUI SE CONFIGURA TODOS LAS RUTAS*/
     .register({
     HomeRoutes: asFunction(HomeRoutes).singleton()
-    });
+    })
+
+    /*configuramos las inyecciones */
+    .register({
+        User: asValue(User),
+        Idea: asValue(Idea),
+        Comment: asValue(Comment)
+    })
 
 module.exports = container;
